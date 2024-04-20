@@ -17,10 +17,6 @@ app.use(cors());
 
 
 
-
-
-
-
     router.get("/",(req, res) => {
         res.send("Nosotras x League of legends la mejor collab")
     })
@@ -112,7 +108,13 @@ app.post("/login", async (req, res) => {
             description: text_d 
           };
         // Enviar la respuesta como JSON al frontend
-        res.status(200).json(jsonResponse);
+        const user = await ModelUser.findById({_id:id});
+        const record = user.record
+        const new_record = [link,text_animal,text_d]
+        record.push(new_record)
+        const response_new_record = await ModelUser.findOneAndUpdate({_id:id},{record:record}, {new: true})
+        res.send(response_new_record)
+        //res.status(200).json(jsonResponse);
 
       // ... code to save changes in the database (unchanged)
   
@@ -122,6 +124,25 @@ app.post("/login", async (req, res) => {
       res.status(500).json({ message: "Error al agregar etiquetas al usuario" });
     }
   });
+
+  //Funcion que sirve para traer a todos los usuarios
+
+  router.get("/all", async (req,res) => {
+    const response = await ModelUser.find({})
+    res.send(response)
+  })
+
+  //Funcion que sirve para traer a 1 usuario por id
+
+  router.get("/one/:id", async (req,res) =>{
+    const id = req.params.id
+    const response = await ModelUser.findById(id)
+    res.send(response)
+  })
+
+
+
+
 
 
 app.listen(3001, () => {
