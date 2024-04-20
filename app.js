@@ -3,7 +3,7 @@ const dbconnect = require('./config');
 const ModelUser = require('./userModel');
 const bcrypt = require('bcrypt');
 const cors = require('cors');
-const bcrypt = require('bcrypt');
+
 const app = express();
 
 const router = express.Router();
@@ -63,6 +63,37 @@ router.post("/register", async (req, res) => {
       res.status(500).json({ message: "Error al registrar nuevo usuario." });
     }
   });
+
+  // Función para agregar un enlace al primer elemento del campo "record" del usuario
+router.post("/picture", async (req, res) => {
+  try {
+      const { id, link } = req.body;
+      
+      // Verifica si se proporciona el ID y el enlace
+      if (!id || !link) {
+          return res.status(400).json({ message: "Se requiere proporcionar un ID de usuario y un enlace" });
+      }
+      
+      // Encuentra al usuario por su ID
+      const user = await ModelUser.findById(id);
+
+      // Si no se encuentra al usuario, devuelve un error
+      if (!user) {
+          return res.status(404).json({ message: "Usuario no encontrado" });
+      }
+
+      // Agrega el enlace al principio del array "record"
+      user.record.unshift({ link });
+
+      // Guarda los cambios en la base de datos
+      await user.save();
+
+      res.status(200).json({ message: "Enlace agregado exitosamente al usuario", user: user });
+  } catch (error) {
+      console.error('Error al agregar enlace al usuario:', error);
+      res.status(500).json({ message: "Error al agregar enlace al usuario" });
+  }
+});
 
 
 app.listen(3001, () => {
