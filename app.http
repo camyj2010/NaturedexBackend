@@ -6,3 +6,12 @@ Content-Type: application/json
     "email": "Faelala@ejemplo.com",
     "password": "flan"
 }
+###IMAGEN A PROCESAR
+
+POST http://localhost:3001/picture
+Content-Type: application/json
+
+{
+     "id": "6623cf58a5337f7d9e681999",
+    "link":"https://res.cloudinary.com/vikingr-saga/image/upload/v1688347759/samples/animals/cat.jpg"
+}
