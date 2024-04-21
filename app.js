@@ -39,7 +39,7 @@ app.post("/login", async (req, res) => {
             return res.status(401).json({ message: "Credenciales inválidas" });
         }
 
-        res.status(200).json({ message: "Inicio de sesión exitoso", user: user });
+        res.status(200).json({ message: "Inicio de sesión exitoso", _id: user._id, username: user.username,  email: user.email, record: user.record });
     } catch (error) {
         console.error('Error al iniciar sesión:', error);
         res.status(500).json({ message: "Error al iniciar sesión" });
