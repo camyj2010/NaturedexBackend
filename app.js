@@ -11,8 +11,9 @@ const app = express();
 const vision = new ImageAnnotatorClient();
 const router = express.Router();
 app.use(express.json());
-app.use(router);
 app.use(cors());
+app.use(router);
+
 
 
 
