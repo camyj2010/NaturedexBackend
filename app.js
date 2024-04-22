@@ -113,6 +113,7 @@ app.post("/login", async (req, res) => {
         const new_record = [link,text_animal,text_d]
         record.push(new_record)
         const response_new_record = await ModelUser.findOneAndUpdate({_id:id},{record:record}, {new: true})
+        res.status(200)
         res.send(response_new_record)
         //res.status(200).json(jsonResponse);
 
