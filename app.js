@@ -158,11 +158,11 @@ app.post("/login", async (req, res) => {
 
 
 
-app.listen(3001, () => {
-    console.log("El servidor esta corriendo en el puerto 3001")
-})
+// app.listen(3001, () => {
+//     console.log("El servidor esta corriendo en el puerto 3001")
+// })
 
 
-module.exports = app
+module.exports = app;
 dbconnect();
 
