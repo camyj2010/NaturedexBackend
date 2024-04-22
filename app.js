@@ -165,6 +165,6 @@ app.listen(3001, () => {
 })
 
 
-module.exports = app
+module.exports = app;
 dbconnect();
 
