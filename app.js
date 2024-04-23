@@ -7,8 +7,9 @@ const cors = require('cors');
 const { ImageAnnotatorClient } = require('@google-cloud/vision');
 const { GoogleGenerativeAI } = require("@google/generative-ai");
 const app = express();
-const router = express.Router();
 app.use(cors());
+const router = express.Router();
+
 
 const vision = new ImageAnnotatorClient({
   credentials: {
@@ -24,6 +25,7 @@ const vision = new ImageAnnotatorClient({
     client_x509_cert_url: process.env.GOOGLE_CLOUD_CLIENT_X509_CERT_URL,
   },
 });
+
 
 
 
@@ -126,6 +128,7 @@ router.post("/login", async (req, res) => {
         const new_record = [link,text_animal,text_d]
         record.push(new_record)
         const response_new_record = await ModelUser.findOneAndUpdate({_id:id},{record:record}, {new: true})
+        res.status(200)
         res.send(response_new_record)
         //res.status(200).json(jsonResponse);
 
