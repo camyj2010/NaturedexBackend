@@ -7,6 +7,9 @@ const cors = require('cors');
 const { ImageAnnotatorClient } = require('@google-cloud/vision');
 const { GoogleGenerativeAI } = require("@google/generative-ai");
 const app = express();
+app.use(cors());
+const router = express.Router();
+
 
 const vision = new ImageAnnotatorClient({
   credentials: {
@@ -22,16 +25,14 @@ const vision = new ImageAnnotatorClient({
     client_x509_cert_url: process.env.GOOGLE_CLOUD_CLIENT_X509_CERT_URL,
   },
 });
-const router = express.Router();
-app.use(express.json());
-app.use(cors());
-app.use(router);
 
 
 
 
 
-    router.get("/",(req, res) => {
+
+
+router.get("/",(req, res) => {
         res.send("Nosotras x League of legends la mejor collab")
     })
 
@@ -39,7 +40,7 @@ app.use(router);
 
 //Login de usuario
 
-app.post("/login", async (req, res) => {
+router.post("/login", async (req, res) => {
     try {
         const { email, password } = req.body;
         const user = await ModelUser.findOne({ email });
@@ -156,15 +157,14 @@ app.post("/login", async (req, res) => {
   })
 
 
+app.use(express.json())
+app.use(router)
 
 
 
-
-app.listen(3001, () => {
-    console.log("El servidor esta corriendo en el puerto 3001")
+app.listen(process.env.PORT||3001,() => {
+    console.log("hola")
 })
 
-
-module.exports = app;
 dbconnect();
 
